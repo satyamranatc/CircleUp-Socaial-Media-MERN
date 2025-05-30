@@ -5,8 +5,20 @@ export function allUser(req, res) {
 }
 
 export async function login(req, res) {
-    let newUser = await User.findOne({ email: req.body.email });
-    return res.json(newUser)
+   try
+   {
+
+     let newUser = await User.findOne({ email: req.body.email });
+     if(!newUser)
+     {
+        return res.status(400).json({error: "User Not Found"})
+     }
+     return res.json(newUser)
+   }
+   catch(err)
+   {
+    return res.status(400).json({error: err})
+   }
 }
 
 export async function signup(req, res) {

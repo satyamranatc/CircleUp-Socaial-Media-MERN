@@ -5,10 +5,6 @@ let LikeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    Count: {
-        type: Number,
-        default: 0,
-    },
 })
 
 let CommentSchema = new mongoose.Schema({

@@ -1,9 +1,22 @@
 import React,{useState,useEffect} from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import axios from 'axios'
 
 export default function Login({setUserData}) {
     let navigate = useNavigate();
+
+        useEffect(()=>{
+            function GetDataFromLocalStorage()
+            {
+                let Data = JSON.parse(localStorage.getItem("user"));
+                if (Data)
+                {
+                    navigate("/profile");
+                }
+            }
+            GetDataFromLocalStorage();
+    
+        },[])
 
     async function handleSubmit(e) 
     {
@@ -94,9 +107,9 @@ export default function Login({setUserData}) {
             <div className="bg-white rounded-lg border border-gray-200 p-6 mt-4 text-center shadow-sm">
                 <p className="text-sm text-gray-600">
                     Don't have an account? 
-                    <a href="#" className="text-blue-500 font-semibold hover:text-blue-600 ml-1">
+                    <Link to="/signup" className="text-blue-500 font-semibold hover:text-blue-600 ml-1">
                         Sign up
-                    </a>
+                    </Link>
                 </p>
             </div>
 

@@ -61,7 +61,7 @@ export default function Navbar({ UserData, setUserData }) {
                                     <h2>{UserData.name}</h2>
                                     <button className="bg-red-500 text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-red-600 transition-colors" onClick={() => {
                                         localStorage.removeItem("user");
-                                        window.location.reload();
+                                        setUserData(null)
                                     }} >Log Out
                                     </button>
                                 </div>

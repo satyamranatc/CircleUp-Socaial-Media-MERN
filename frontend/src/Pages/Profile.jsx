@@ -3,11 +3,13 @@ import axios from 'axios';
 
 export default function Profile({UserData}) {
     let [AllPost,setAllPost] = useState([]);
+    let [PostUpload,setPostUpload] = useState(false);
 
 
     async function handlePostSubmit(e)
     {
         e.preventDefault();
+        setPostUpload(true);
         let PostImage = e.target[0].value;
         let caption = e.target[1].value;
         let postBy= UserData._id;
@@ -24,6 +26,10 @@ export default function Profile({UserData}) {
         {
             console.log(Res.data)
         }
+
+        setTimeout(() => {
+            setPostUpload(false);
+        }, 2000);
     }
 
     useEffect(()=>{
@@ -43,7 +49,7 @@ export default function Profile({UserData}) {
         }
         GetAllPost();
         // console.log(UserData);
-    },[])
+    },[PostUpload])
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
@@ -97,7 +103,9 @@ export default function Profile({UserData}) {
             </div>
 
             {/* Create Post Section */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8 shadow-sm">
+            {
+                !PostUpload? 
+                  <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8 shadow-sm">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Create New Post</h2>
                 <form onSubmit={handlePostSubmit} className="space-y-4">
                     <div>
@@ -121,7 +129,11 @@ export default function Profile({UserData}) {
                         Share Post
                     </button>
                 </form>
+            </div>:
+            <div>
+                <h2>Uploaded Post</h2>
             </div>
+            }
 
             {/* Posts Grid */}
             <div className="border-t border-gray-200 pt-8">
@@ -145,23 +157,8 @@ export default function Profile({UserData}) {
                     {
                         AllPost.map((post, index)=>{
                             return(
-                                <div key={index} className="bg-white border border-gray-200 rounded-lg mb-6 shadow-sm">
-                                    {/* Post Header */}
-                                    <div className="flex items-center px-4 py-3">
-                                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                                            <span className="text-white text-sm font-semibold">{post.username}</span>
-                                        </div>
-                                        <div className="ml-3">
-                                            <p className="text-sm font-semibold text-gray-900">{post.username}</p>
-                                            <p className="text-xs text-gray-600">{post.createdAt}</p>
-                                        </div>
-                                    </div>
-                                    {/* Post Image */}
-                                    <img src={post.PostImage} alt="Post" className="w-full h-80 object-cover rounded-t-lg" />
-                                    {/* Post Caption */}
-                                    <div className="p-4">
-                                        <p className="text-sm text-gray-600">{post.caption}</p>
-                                    </div>
+                                <div key={index} className="bg-white border border-gray-200  mb-6 shadow-sm">
+                                    <img src={post.PostImage} alt="Post" className="w-full h-full object-cover" />
                                 </div>
                             )
                         })

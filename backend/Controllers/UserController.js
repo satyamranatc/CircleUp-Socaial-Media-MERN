@@ -23,6 +23,13 @@ export async function login(req, res) {
 
 export async function signup(req, res) {
     let newUser = new User(req.body);
-    await newUser.save();
-    return res.json(newUser)
+    try
+    {
+        await newUser.save();
+        return res.status(200).json(newUser)
+    }
+    catch(err)
+    {
+        return res.status(400).json({error: err})
+    }
 }

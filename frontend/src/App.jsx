@@ -35,7 +35,7 @@ export default function App() {
             <Route path="/" element={<PrivateRoute UserData = {UserData} Component = {<Explore/>} />} />
             <Route path="/profile" element={<PrivateRoute UserData = {UserData} Component = {<Profile UserData = {UserData} />} />} />
             <Route path="/login" element={<Login setUserData = {setUserData}/>} />
-            <Route path="/signup" element={<SignUp/>} />
+            <Route path="/signup" element={<SignUp setUserData = {setUserData}/>} />
           </Routes>  
         </BrowserRouter>
     </div>

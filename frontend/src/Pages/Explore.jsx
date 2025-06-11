@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import moment from 'moment'
 import axios from 'axios'
 
 export default function Explore() {
@@ -96,7 +97,10 @@ export default function Explore() {
                         
                         {/* Time */}
                         <div className="px-4 pb-3">
-                            <p className="text-xs text-gray-400 uppercase">{post.createdAt}</p>
+                            {/* show Created at how many days ago from today - created at */}
+                            <p className="text-xs text-gray-400 uppercase">{
+                                    moment(post.createdAt).fromNow()
+                                }</p>
                         </div>
                     </div>
                 )

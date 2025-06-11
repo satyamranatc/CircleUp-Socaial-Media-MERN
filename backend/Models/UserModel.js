@@ -7,7 +7,7 @@ let UserSchema = new mongoose.Schema({
     },
     profilePic: {
         type: String,
-        required: true,
+        default: "https://static-00.iconduck.com/assets.00/user-2-account-icon-2048x2046-oucjsuyg.png",
     },
     username: {
         type: String,

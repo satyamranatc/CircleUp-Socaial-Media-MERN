@@ -14,7 +14,7 @@ export async function userPost(req, res) {
 export async function savePost(req, res) {
     let newPost = new Post(req.body);
     // Update Post Count:
-   
+
     let user = await User.findById(newPost.postBy);
     console.log(user.postCount);
     user.postCount = user.postCount + 1;

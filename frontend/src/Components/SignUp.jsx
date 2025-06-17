@@ -35,7 +35,7 @@ export default  function Signup({ setUserData }) {
         }
 
         let Res = await axios.post("http://localhost:5100/api/users/signup",newUserData)
-        if(Res.status == 200)
+        if(Res.status == 201)
         {
             console.log(Res.data)
             localStorage.setItem("user",JSON.stringify(Res.data));

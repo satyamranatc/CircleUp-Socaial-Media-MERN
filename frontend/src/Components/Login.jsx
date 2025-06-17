@@ -22,10 +22,12 @@ export default function Login({setUserData}) {
     {
         e.preventDefault();
         const email = e.target[0].value;
+        const password = e.target[1].value;
         console.log(email);
 
         const Res = await axios.post("http://localhost:5100/api/users/login",{
             email,
+            password
         })
         if(Res.status == 200)
         {
@@ -64,6 +66,11 @@ export default function Login({setUserData}) {
                         <input 
                             type="text" 
                             placeholder="Email address"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm bg-gray-50 focus:bg-white transition-colors"
+                        />
+                        <input 
+                            type="text" 
+                            placeholder="Password"
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm bg-gray-50 focus:bg-white transition-colors"
                         />
 

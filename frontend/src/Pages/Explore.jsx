@@ -8,7 +8,11 @@ export default function Explore() {
     useEffect(()=>{
         async function GetAllPost()
         {
-            let Res = await axios.get("http://localhost:5100/api/posts")
+            let Res = await axios.get("http://localhost:5100/api/posts",{
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`
+                }
+            })
             if(Res.status == 200)
             {
                 console.log(Res.data);

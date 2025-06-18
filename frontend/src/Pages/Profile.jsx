@@ -3,6 +3,8 @@ import axios from 'axios';
 
 export default function Profile({UserData}) {
     let [AllPost,setAllPost] = useState([]);
+    let [UserProfileData,setUserProfileData] = useState([]);
+
     let [PostUpload,setPostUpload] = useState(false);
 
 
@@ -17,7 +19,11 @@ export default function Profile({UserData}) {
             PostImage,
             caption,
             postBy,
-        })
+        },{
+                headers: {
+                    Authorization: `${JSON.parse(localStorage.getItem("user")).token}`
+                }
+            })
         if(Res.status == 200)
         {
             console.log(Res.data)
@@ -36,7 +42,11 @@ export default function Profile({UserData}) {
         async function GetAllPost()
         {
             let Data = JSON.parse(localStorage.getItem("user"));
-            let Res = await axios.get(`http://localhost:5100/api/posts/postBy/${Data._id}`)
+            let Res = await axios.get(`http://localhost:5100/api/posts/postBy/${Data._id}`,{
+                headers: {
+                    Authorization: `${JSON.parse(localStorage.getItem("user")).token}`
+                }
+            })
             if(Res.status == 200)
             {
                 console.log(Res.data);
@@ -49,6 +59,30 @@ export default function Profile({UserData}) {
         }
         GetAllPost();
         // console.log(UserData);
+    },[PostUpload])
+
+
+    useEffect(()=>{
+       async function GetUserData()
+       {
+        let id = JSON.parse(localStorage.getItem("user"))._id
+        let UserData = await axios.get(`http://localhost:5100/api/users/${id}`,{
+            headers: {
+                Authorization: `${JSON.parse(localStorage.getItem("user")).token}`
+            }
+        })
+        if(UserData.status == 200)
+        {
+            console.log(UserData.data);
+            setUserProfileData(UserData.data)
+        }
+        else
+        {
+            console.log(UserData.data)
+        }
+
+       }
+       GetUserData();
     },[PostUpload])
 
   return (
@@ -81,7 +115,7 @@ export default function Profile({UserData}) {
                     {/* Stats */}
                     <div className="flex justify-center md:justify-start space-x-8 mb-4">
                         <div className="text-center">
-                            <span className="font-semibold text-gray-900">{UserData.postCount}</span>
+                            <span className="font-semibold text-gray-900">{UserProfileData.postCount}</span>
                             <p className="text-sm text-gray-600">posts</p>
                         </div>
                         <div className="text-center">
@@ -96,7 +130,7 @@ export default function Profile({UserData}) {
                     
                     {/* Bio */}
                     <div className="text-sm">
-                        <p className="font-semibold text-gray-900">{UserData.fullname}</p>
+                        <p className="font-semibold text-gray-900">{UserProfileData.fullname}</p>
                         <p className="text-gray-600">Bio goes here...</p>
                     </div>
                 </div>

@@ -1,9 +1,24 @@
 import { Router } from "express";
+import jwt from "jsonwebtoken";
+import "dotenv/config"
 
-export const authMiddleware = (req, res, next) => {
-    if (req.headers.authorization) {
+
+const authMiddleware = (req, res, next) => {
+    try {
+        console.log(req.headers.authorization);
+        const token = req.headers.authorization;
+        const decoded = jwt.verify(token, process.env.JWT_Secret);
+        console.log(decoded);
+        if (!decoded) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+        req.user = decoded;
+
         next();
-    } else {
-        res.status(401).json({ message: "Unauthorized" });
+    } catch (error) {
+        res.status(401).json({ error: "Unauthorized" });
     }
 };
+
+
+export default authMiddleware;

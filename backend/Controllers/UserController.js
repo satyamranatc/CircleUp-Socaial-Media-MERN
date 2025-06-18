@@ -7,6 +7,13 @@ export function allUser(req, res) {
     return res.json("All User");
 }
 
+// Get one users (example placeholder)
+export async function  oneUser(req, res) {
+    let UserData = await User.findById(req.params.id);
+    console.log(UserData);
+    return res.status(200).json(UserData)
+}
+
 // Login Function
 export async function login(req, res) {
     try {
@@ -28,12 +35,6 @@ export async function login(req, res) {
 
         return res.status(200).json({
             _id: user._id,
-            username: user.username,
-            fullname: user.fullname,
-            email: user.email,
-            profilePic: user.profilePic,
-            bio: user.bio,
-            postCount: user.postCount,
             token
         });
     } catch (err) {
@@ -68,12 +69,6 @@ export async function signup(req, res) {
 
         return res.status(201).json({
             _id: newUser._id,
-            username: newUser.username,
-            fullname: newUser.fullname,
-            email: newUser.email,
-            profilePic: newUser.profilePic,
-            bio: newUser.bio,
-            postCount: newUser.postCount,
             token
         });
     } catch (err) {

@@ -10,7 +10,7 @@ export default function Explore() {
         {
             let Res = await axios.get("http://localhost:5100/api/posts",{
                 headers: {
-                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}`
+                    Authorization: `${JSON.parse(localStorage.getItem("user")).token}`
                 }
             })
             if(Res.status == 200)

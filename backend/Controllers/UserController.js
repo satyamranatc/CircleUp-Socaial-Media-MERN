@@ -76,3 +76,18 @@ export async function signup(req, res) {
         return res.status(500).json({ error: "Failed to sign up user" });
     }
 }
+
+
+export function update(req,res)
+{
+    let Data = req.body;
+    let Id = req.params.id;
+    User.findByIdAndUpdate(Id,Data)
+    .then((data) => {
+        return res.status(200).json(data);
+    })
+    .catch((err) => {
+        return res.status(500).json(err);
+    })
+
+}
